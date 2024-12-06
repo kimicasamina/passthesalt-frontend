@@ -2,7 +2,6 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { config } from "dotenv";
 import { resolve } from "path";
-import fs from "fs/promises";
 
 config();
 
@@ -24,11 +23,14 @@ export default defineConfig({
         target:
           process.env.VITE_MODE === "production"
             ? process.env.VITE_PASSTHESALT_SERVER
-            : "http://localhost:9000",
+            : "http://localhost:9000", // Local development URL
+        changeOrigin: true,
+        secure: false, // Only for self-signed certs in development
+        rewrite: (path) => path.replace(/^\/api/, ""), // Optional: rewrite the path (if needed)
       },
-
       "/admin": {
         target: "http://localhost:8081/",
+        changeOrigin: true,
       },
     },
   },
