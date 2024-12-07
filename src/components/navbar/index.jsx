@@ -1,11 +1,11 @@
 import React from "react";
-import axios from "axios";
 import { useAuth } from "../../context/auth";
 import { useNavigate, Link } from "react-router-dom";
 import { TbSalt } from "react-icons/tb";
 import { TbUser } from "react-icons/tb";
 import toast from "react-hot-toast";
 import Searchbar from "../searchbar";
+import axios from "axios";
 
 export default function Navbar() {
   const { user, logoutUser } = useAuth();

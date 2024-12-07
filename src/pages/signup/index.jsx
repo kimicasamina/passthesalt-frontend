@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios";
+import axios from "axios"
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
@@ -17,7 +17,9 @@ export default function Signup() {
     e.preventDefault();
 
     try {
-      const { data } = await axios.post("/api/auth/register/", { ...formData });
+      const { data } = await axios.post("/api/auth/register/", {
+        ...formData,
+      });
       console.log("DATA: ", data);
       setLogin(data.user);
       toast.success("User is registered");

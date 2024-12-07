@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { TbSquarePlus } from "react-icons/tb";
 import { useAuth } from "../../context/auth";
+
 export default function Searchbar() {
   const { setSearchKeyword } = useAuth();
   //   const [keyword, setKeyword] = useState("");

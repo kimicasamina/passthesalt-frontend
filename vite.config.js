@@ -1,18 +1,21 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import { config } from "dotenv";
+import { config } from "dotenv"; // Import dotenv
 import { resolve } from "path";
-const viteMode = import.meta.env.VITE_MODE;
-const apiUrl = import.meta.env.VITE_API_URL;
 
+// Manually load .env file (optional, since Vite handles it)
 config();
 
-// https://vite.dev/config/
+const apiUrl = process.env.VITE_API_URL;
+const viteMode = process.env.VITE_MODE; // Ensure the variables are accessed via process.env
+
+console.log(process.env); // You can check if the env variables are loaded correctly
+
 export default defineConfig({
   define: {
+    // Allow process.env to be accessed in the app
     "process.env": process.env,
   },
-  // --- this config enables jsx at js constant
   resolve: {
     alias: {
       src: resolve(__dirname, "src"),
@@ -22,14 +25,10 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: viteMode === "production" ? apiUrl : "http://localhost:9000", // Local development URL
+        target: viteMode === "production" ? apiUrl : "http://localhost:9000",
         changeOrigin: true,
-        secure: false, // Only for self-signed certs in development
-        rewrite: (path) => path.replace(/^\/api/, ""), // Optional: rewrite the path (if needed)
-      },
-      "/admin": {
-        target: "http://localhost:8081/",
-        changeOrigin: true,
+        secure: false, // Use true for https if needed
+        rewrite: (path) => path.replace(/^\/api/, ""), // Optionally rewrite the path if needed
       },
     },
   },
