@@ -6,15 +6,14 @@ import { resolve } from "path";
 // Manually load .env file (optional, since Vite handles it)
 config();
 
-const apiUrl = process.env.VITE_API_URL;
-const viteMode = process.env.VITE_MODE; // Ensure the variables are accessed via process.env
+const apiUrl = process.env.VITE_API_URL; // This should be 'https://passthesalt-backend-api.onrender.com'
+const viteMode = process.env.VITE_MODE; // This can be 'development' or 'production'
 
 console.log(process.env); // You can check if the env variables are loaded correctly
 
 export default defineConfig({
   define: {
-    // Allow process.env to be accessed in the app
-    "process.env": process.env,
+    "process.env": process.env, // Allows process.env to be accessed within the app
   },
   resolve: {
     alias: {
@@ -25,10 +24,10 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target: viteMode === "production" ? apiUrl : "http://localhost:9000",
-        changeOrigin: true,
-        secure: false, // Use true for https if needed
-        rewrite: (path) => path.replace(/^\/api/, ""), // Optionally rewrite the path if needed
+        target: viteMode === "production" ? apiUrl : "http://localhost:9000", // Use actual backend URL for production or localhost for dev
+        changeOrigin: true, // Ensures the host header is updated to the target's host
+        secure: false, // Set to true if using https for localhost or backend
+        rewrite: (path) => path.replace(/^\/api/, ""), // Removes /api prefix before forwarding
       },
     },
   },
