@@ -2,6 +2,8 @@ import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
 import { config } from "dotenv";
 import { resolve } from "path";
+const viteMode = import.meta.env.VITE_MODE;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 config();
 
@@ -20,10 +22,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": {
-        target:
-          process.env.VITE_MODE === "production"
-            ? process.env.VITE_PASSTHESALT_SERVER
-            : "http://localhost:9000", // Local development URL
+        target: viteMode === "production" ? apiUrl : "http://localhost:9000", // Local development URL
         changeOrigin: true,
         secure: false, // Only for self-signed certs in development
         rewrite: (path) => path.replace(/^\/api/, ""), // Optional: rewrite the path (if needed)
