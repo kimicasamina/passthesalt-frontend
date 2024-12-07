@@ -4,7 +4,7 @@ import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
 import axios from "axios";
-const API_URL = import.meta.env.PASSTHESALT_API_URL;
+
 export default function Signin() {
   const { loginUser } = useAuth();
   const navigate = useNavigate();
@@ -16,7 +16,6 @@ export default function Signin() {
   async function onSignin(e) {
     e.preventDefault();
     console.log("FORMDATA: ", formData);
-    console.log("API_URL", API_URL);
 
     try {
       const { data } = await axios.post("/api/auth/login/", {

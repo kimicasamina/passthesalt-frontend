@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import axios from "axios"
+import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/auth";
 import { useNavigate } from "react-router-dom";
@@ -26,7 +26,7 @@ export default function Signup() {
       return navigate("/signin");
     } catch (error) {
       console.log(error);
-      return toast.error(error.response.data.error);
+      return toast.error("Something went wrong");
     }
   }
 
